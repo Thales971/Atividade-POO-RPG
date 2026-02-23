@@ -1,0 +1,26 @@
+Não sabia se era pra responder ou não, logo eu respondi...
+
+Respostas da Atividade: EpicDev RPG
+
+1. O que aconteceria se a vida não fosse privada?
+
+Resposta:
+Se o atributo #hp não fosse privado (encapsulado), qualquer parte do código fora da classe Personagem poderia alterar o valor da vida diretamente (ex: personagem.hp = -500). Isso quebraria as regras do jogo, pois a vida poderia assumir valores inválidos ou negativos sem passar pela lógica de controle do método receberDano(), que garante que a vida nunca fique abaixo de zero e mantém o equilíbrio do sistema.
+
+2. Por que a herança facilita a criação de novos personagens?
+
+Resposta:
+A herança permite que criemos novas classes (como Guerreiro e Mago) aproveitando todo o código já escrito na classe base Personagem. Não precisamos reescrever os atributos nome, poderDeAtaque ou o método receberDano() para cada novo tipo de personagem. Isso torna o código mais organizado, fácil de manter e escalável: se quisermos criar um "Arqueiro", basta estender Personagem e adicionar apenas o que for específico dele.
+
+3. Onde exatamente está acontecendo o polimorfismo?
+
+Resposta:
+O polimorfismo acontece no método atacar(alvo). Embora tanto o Guerreiro quanto o Mago tenham um método chamado atacar, cada um se comporta de maneira diferente:
+
+•
+O Guerreiro calcula o dano somando sua forcaFisica.
+
+•
+O Mago calcula o dano multiplicando seu poderMagico por 2.
+O "coração" do polimorfismo é que o sistema pode chamar personagem.atacar(alvo) sem precisar saber se o personagem é um Guerreiro ou um Mago; o objeto "sabe" qual comportamento executar.
+

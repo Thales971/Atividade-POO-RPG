@@ -1,0 +1,31 @@
+Caso não de algum problema no png que mandei do terminal^_^
+
+--- INÍCIO DA JORNADA ---
+[Status] Nome: Thales o Bravo | HP: 120 | Estado: Vivo
+[Status] Nome: Mago Sombrio | HP: 80 | Estado: Vivo
+-------------------------
+
+--- TURNO 1 ---
+Thales o Bravo desfere um golpe de espada potente! ⚔️
+Mago Sombrio recebeu 35 de dano.
+[Status] Nome: Mago Sombrio | HP: 45 | Estado: Vivo
+
+Mago Sombrio lança uma poderosa bola de fogo! 🔥
+Thales o Bravo recebeu 65 de dano.
+[Status] Nome: Thales o Bravo | HP: 55 | Estado: Vivo
+-------------------------
+
+--- TURNO 2 ---
+Thales o Bravo desfere um golpe de espada potente! ⚔️
+Mago Sombrio recebeu 35 de dano.
+[Status] Nome: Mago Sombrio | HP: 10 | Estado: Vivo
+
+Mago Sombrio lança uma poderosa bola de fogo! 🔥
+Thales o Bravo recebeu 65 de dano.
+[Status] Nome: Thales o Bravo | HP: 0 | Estado: Derrotado
+
+💀 Mago Sombrio foi vitorioso...
+
+--- FIM DA BATALHA ---
+[Status] Nome: Thales o Bravo | HP: 0 | Estado: Derrotado
+[Status] Nome: Mago Sombrio | HP: 10 | Estado: Vivo

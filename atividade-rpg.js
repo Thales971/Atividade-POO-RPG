@@ -1,132 +1,128 @@
 /**
- * ATIVIDADE POO - RPG
+ * ATIVIDADE POO - RPG (EpicDev Studios)
+ * Desenvolvedor: Thales 
+ * 
+ * Este código implementa os 4 pilares da POO:
+ * 1. Abstração: Classe base Personagem.
+ * 2. Encapsulamento: Atributo #hp privado e métodos de acesso.
+ * 3. Herança: Classes Guerreiro e Mago estendendo Personagem.
+ * 4. Polimorfismo: Método atacar(alvo) com comportamentos distintos.
  */
 
-//1-Abstração
+// 1. Abstração - Criando a base de tudo
 class Personagem {
     nome;
     poderDeAtaque;
-    #hp; // Encapsulamento: HP privado
+    // 2. Encapsulamento - Protegendo o HP
+    #hp;
 
     constructor(nome, poderDeAtaque, hp = 100) {
-        if (typeof hp !== 'number' || hp <= 0) {
-            throw new Error('HP deve ser um número maior que 0');
-        }
-
         this.nome = nome;
-        this.poderDeAtaque = Number(poderDeAtaque);
-        this.#hp = hp;
+        this.poderDeAtaque = poderDeAtaque;
+        // Garante que o HP inicial não seja negativo
+        this.#hp = hp > 0 ? hp : 100;
     }
 
-    // Método para processar o dano recebido
+    // Método para processar o dano recebido (Encapsulamento)
     receberDano(valor) {
-        const dano = Number(valor);
-        if (isNaN(dano) || dano <= 0) {
-            return `${this.nome} não recebeu dano válido.`;
-        }
-
-        this.#hp -= dano;
-        if (this.#hp <= 0) {
+        this.#hp -= valor;
+        // A vida nunca pode ficar negativa
+        if (this.#hp < 0) {
             this.#hp = 0;
-            return `${this.nome} foi atingido por ${dano} de dano e foi nocauteado! HP: ${this.#hp}.`;
-        } else {
-            return `${this.nome} sofreu ${dano} de dano. HP restante: ${this.#hp}.`;
         }
+        console.log(`${this.nome} recebeu ${valor} de dano.`);
     }
 
-    // Exibe o status atual do personagem
+    // Método público para exibir o status (Encapsulamento)
     exibirStatus() {
-        if (this.#hp <= 0) {
-            return `${this.nome} está fora de combate! HP: ${this.#hp}. ☠️`;
-        } else {
-            return `${this.nome} segue firme na luta! HP: ${this.#hp}. 💪`;
-        }
+        const status = this.#hp > 0 ? "Vivo" : "Derrotado";
+        console.log(`[Status] Nome: ${this.nome} | HP: ${this.#hp} | Estado: ${status}`);
     }
 
-    get hp() {
-        return this.#hp;
-    }
-
+    // Método auxiliar para verificar se ainda está na luta
     estaVivo() {
         return this.#hp > 0;
     }
+
+    // Getter para o HP (opcional, mas útil para o diagrama)
+    get hp() {
+        return this.#hp;
+    }
 }
 
-// Herança: Classe Guerreiro
+// 3. Herança - Especializando personagens
 class Guerreiro extends Personagem {
+    forcaFisica;
+
     constructor(nome, poderDeAtaque, hp, forcaFisica) {
         super(nome, poderDeAtaque, hp);
         this.forcaFisica = forcaFisica;
     }
 
-    // Polimorfismo: Ataque específico do Guerreiro
+    // 4. Polimorfismo - Comportamento específico do Guerreiro
     atacar(alvo) {
         const danoTotal = this.poderDeAtaque + this.forcaFisica;
-        const nomeAlvo = typeof alvo === 'string' ? alvo : (alvo?.nome ?? 'alvo');
-        const mensagem = `${this.nome} desferiu um golpe crítico de ${danoTotal} em ${nomeAlvo} usando seu Machado! 🪓`;
-
-        if (alvo && typeof alvo.receberDano === 'function') {
-            const resultado = alvo.receberDano(danoTotal);
-            return `${mensagem}\n${resultado}`;
-        }
-
-        return mensagem;
+        console.log(`${this.nome} desfere um golpe de espada potente! ⚔️`);
+        alvo.receberDano(danoTotal);
     }
 }
 
-// Herança: Classe Mago
 class Mago extends Personagem {
+    poderMagico;
+
     constructor(nome, poderDeAtaque, hp, poderMagico) {
         super(nome, poderDeAtaque, hp);
         this.poderMagico = poderMagico;
     }
 
-    // Polimorfismo: Ataque específico do Mago
+    // 4. Polimorfismo - Comportamento específico do Mago
     atacar(alvo) {
-        const danoMagico = Math.floor(this.poderDeAtaque + (this.poderMagico * 2));
-        const nomeAlvo = typeof alvo === 'string' ? alvo : (alvo?.nome ?? 'alvo');
-        const mensagem = `${this.nome} lançou uma Nevasca de ${danoMagico} de dano em ${nomeAlvo}! ❄️`;
-
-        if (alvo && typeof alvo.receberDano === 'function') {
-            const resultado = alvo.receberDano(danoMagico);
-            return `${mensagem}\n${resultado}`;
-        }
-
-        return mensagem;
+        const danoTotal = this.poderDeAtaque + (this.poderMagico * 2);
+        console.log(`${this.nome} lança uma poderosa bola de fogo! 🔥`);
+        alvo.receberDano(danoTotal);
     }
 }
 
-// SIMULAÇÃO DO COMBATE
+// SIMULAÇÃO DE BATALHA 
 
-// Instâncias (agora com HP explícito)
-const guerreiroThales = new Guerreiro('Thales', 40, 120, 25);
-const magoJhonatan = new Mago('Jhonatan', 30, 100, 35);
+// Criando instâncias (1 Guerreiro e 1 Mago)
+const thalesGuerreiro = new Guerreiro("Thales o Bravo", 20, 120, 15);
+const inimigoMago = new Mago("Mago Sombrio", 15, 80, 25);
 
-function simularBatalha(p1, p2) {
-    console.log('\n---- STATUS INICIAIS ----');
-    console.log(p1.exibirStatus());
-    console.log(p2.exibirStatus());
+console.log(" INÍCIO DA JORNADA ");
+thalesGuerreiro.exibirStatus();
+inimigoMago.exibirStatus();
+console.log("-------------------------\n");
 
-    console.log('\n---- INÍCIO DA BATALHA ----');
-    let rodada = 1;
-
-    while (p1.estaVivo() && p2.estaVivo()) {
-        console.log(`\n🔁 RODADA ${rodada}`);
-
-        console.log(p1.atacar(p2));
-        console.log(p2.exibirStatus());
-        if (!p2.estaVivo()) break;
-
-        console.log(p2.atacar(p1));
-        console.log(p1.exibirStatus());
-        if (!p1.estaVivo()) break;
-
-        rodada++;
+// Simulação de turnos
+let turno = 1;
+while (thalesGuerreiro.estaVivo() && inimigoMago.estaVivo()) {
+    console.log(` TURNO ${turno} `);
+    
+    // Turno do Guerreiro
+    thalesGuerreiro.atacar(inimigoMago);
+    inimigoMago.exibirStatus();
+    
+    if (!inimigoMago.estaVivo()) {
+        console.log(`\n🏆 ${thalesGuerreiro.nome} venceu a batalha!`);
+        break;
     }
 
-    console.log('\n---- STATUS FINAIS ----');
-    console.log(p1.exibirStatus());
-    console.log(p2.exibirStatus());
+    console.log("");
+
+    // Turno do Mago
+    inimigoMago.atacar(thalesGuerreiro);
+    thalesGuerreiro.exibirStatus();
+
+    if (!thalesGuerreiro.estaVivo()) {
+        console.log(`\n💀 ${inimigoMago.nome} foi vitorioso...`);
+        break;
+    }
+
+    console.log("-------------------------\n");
+    turno++;
 }
 
-simularBatalha(guerreiroThales, magoJhonatan);
+console.log(" FIM DA BATALHA");
+thalesGuerreiro.exibirStatus();
+inimigoMago.exibirStatus();
